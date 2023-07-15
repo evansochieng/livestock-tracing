@@ -22,11 +22,13 @@ db.init_app(app)
 
 @app.route('/')
 def index():
-    return '<h1>Welcome to the Livestock Information System!</h1>'
+    return '<h1>Welcome to the Livestock Traceability System!</h1>'
 
 @app.route('/deforested_areas')
 def deforested_areas():
     d_areas = []
+
+    # get all deforested areas from database
     for d_area in DeforestationArea.query.all():
         d_area_dict = {
             "latitude": d_area.latitude,
@@ -35,13 +37,30 @@ def deforested_areas():
         }
         d_areas.append(d_area_dict)
 
-    # response_body = f'''
-    #     <h1>Area 1 has {d_areas[0].area} KM2 under deforestation.</h1>
-    #     <h2>Area 2 has {d_areas[1].area} KM2 deforested.</h2>
-    #     <h2>Area 3 has  {d_areas[2].area} KM2 deforested.</h2>
-    # '''
     response = make_response(
         jsonify(d_areas),
+        200
+    )
+    
+    return response
+
+@app.route('/livestock')
+def livestocks():
+    livestocks = []
+
+    # get all the livestock in the database
+    for livestock in Livestock.query.all():
+        livestock_dict = {
+            "latitude": livestock.latitude,
+            "longitude": livestock.longitude,
+            "owner": livestock.owner,
+            "contact": livestock.contact
+        }
+        livestocks.append(livestock_dict)
+
+    # return a json of livestock records
+    response = make_response(
+        jsonify(livestocks),
         200
     )
     
