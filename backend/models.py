@@ -14,8 +14,8 @@ class Livestock(db.Model):
 
     # add attributes
     id = db.Column(db.Integer, primary_key=True)
-    latitude = db.Column(db.Integer)
-    longitude = db.Column(db.Integer)
+    latitude = db.Column(db.Float)
+    longitude = db.Column(db.Float)
     owner = db.Column(db.String, unique=True)
     contact = db.Column(db.Integer, unique=True)
 
@@ -27,8 +27,8 @@ class DeforestationArea(db.Model):
     __tablename__ = 'deforestation_areas'
 
     id = db.Column(db.Integer, primary_key=True)
-    latitude = db.Column(db.Integer)
-    longitude = db.Column(db.Integer)
+    latitude = db.Column(db.Float)
+    longitude = db.Column(db.Float)
     area = db.Column(db.Integer)
 
     def __repr__(self):
