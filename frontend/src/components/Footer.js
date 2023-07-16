@@ -6,7 +6,7 @@ const Footer = () => {
       {/* // <!--Footer container--> */}
       <footer
         className="bg-neutral-200 text-center text-white dark:bg-neutral-600"
-        style={{ backgroundColor: "#1c94e3" }}
+        style={{ backgroundColor: "#1c94e3", height: "60px" }}
       >
         <div
           className="container pt-9"
