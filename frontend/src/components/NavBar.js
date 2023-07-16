@@ -50,7 +50,7 @@ const NavBar = () => {
                 href="/mapview"
                 data-te-nav-link-ref
               >
-                <strong>Map View</strong>
+                <strong>Trace Livestock</strong>
               </a>
             </li>
             {/* <!-- Campaigns link --> */}
