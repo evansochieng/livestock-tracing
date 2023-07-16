@@ -3,6 +3,8 @@ from flask import Flask, make_response, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 
+from flask_cors import CORS
+
 from models import db, Livestock, DeforestationArea
 
 import sqlite3
@@ -18,6 +20,9 @@ app = Flask(__name__)
 # configure the database
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///livestock_tracing.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False # will avoid building too much unnecessary data in memory
+
+# enable CORS for all routes
+CORS(app)
 
 # set up migrations using the Flask application instance and the SQLAlchemy instance
 migrate = Migrate(app, db)
