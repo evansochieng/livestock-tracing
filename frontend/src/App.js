@@ -25,6 +25,8 @@ function App() {
     .then(data => setLivestock(data));
   }, [])
 
+  console.log(livestock)
+
   return (
     <BrowserRouter>
       <div>

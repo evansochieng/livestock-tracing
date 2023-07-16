@@ -1,14 +1,55 @@
 import React from 'react';
+import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
+//import "leaflet/dist/leaflet.css";
 
-const TraceLivestock = ({livestock}) => {
+const TraceLivestock = ({ livestock }) => {
+  console.log(livestock)
+
+  const handleMarkerMouseOver = (event) => {
+    event.target.openPopup();
+  };
+
   return (
-    <div>
-      <h1>Mapping of animals at risk and those that are not!</h1>
+    // <MapContainer center={[-0.023559, 37.906193]} zoom={5}>
+    //   <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
 
-      <div>{livestock.map((animal, id) => {
-        return <p>{`Animal ${id} owner: ${animal.owner}`}</p>
-      })}</div>
-    </div>
+    //   {livestock.map((animal) => (
+    //     <Marker key={animal.id} position={[animal.latitude, animal.longitude]}>
+    //       <Popup>
+    //         <strong>{animal.owner}</strong>
+    //         <br />
+    //         Latitude: {animal.latitude}, Longitude: {animal.longitude}
+    //       </Popup>
+    //     </Marker>
+    //   ))}
+    // </MapContainer>
+
+    <MapContainer
+      center={[-0.023559, 37.906193]}
+      zoom={7}
+      style={{ height: "541px", width: "100%" }}
+    >
+      <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+      {livestock.map((animal, index) => (
+        <Marker
+          key={index}
+          position={[animal.latitude, animal.longitude]}
+          riseOnHover={true}
+          keyboard={true}
+          eventHandlers={{
+            mouseover: handleMarkerMouseOver,
+          }}
+        >
+          <Popup>
+            <strong>{animal.owner}</strong>
+            <br />
+            <strong>{animal.contact}</strong>
+            <br />
+            Latitude: {animal.latitude}, Longitude: {animal.longitude}
+          </Popup>
+        </Marker>
+      ))}
+    </MapContainer>
   );
 }
 
