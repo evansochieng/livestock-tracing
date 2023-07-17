@@ -10,9 +10,11 @@ import Campaigns from './components/Campaigns';
 
 function App() {
 
-  // define state for all livestock
+  // define state for all livestock, deforested areas, and livestock at risk
   const [livestock, setLivestock] = useState([]);
   const [deforestedAreas, setDeforestedAreas] = useState([]);
+  const [livestockAtRisk, setLivestockAtRisk] = useState([]);
+
 
   // fetch livestock data
   useEffect(() => {
@@ -38,6 +40,18 @@ function App() {
     .then(data => setDeforestedAreas(data));
   }, []);
 
+  // fetch livestock at risk data
+  useEffect(() => {
+    fetch("http://127.0.0.1:5000/livestock_at_risk")
+    .then(res => {
+      if (res.ok) {
+        return res.json();
+      }
+      throw res;
+    })
+    .then(data => setLivestockAtRisk(data));
+  }, [])
+
   return (
     <BrowserRouter>
       <div>
@@ -46,7 +60,7 @@ function App() {
         <Routes>
           <Route exact path="/" element={<Home />} />
 
-          <Route exact path="/tracelivestock" element={<TraceLivestock livestock={livestock} deforestedAreas={deforestedAreas} />} />
+          <Route exact path="/tracelivestock" element={<TraceLivestock livestock={livestock} deforestedAreas={deforestedAreas} livestockAtRisk={livestockAtRisk} />} />
 
           <Route exact path="/campaigns" element={<Campaigns />} />
         </Routes>

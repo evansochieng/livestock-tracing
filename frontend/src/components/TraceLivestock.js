@@ -7,8 +7,7 @@ import redicon from "../images/redicon.png";
 import greenicon from "../images/greenicon.png";
 import greyicon from "../images/greyicon.png";
 
-const TraceLivestock = ({ livestock, deforestedAreas }) => {
-
+const TraceLivestock = ({ livestock, deforestedAreas, livestockAtRisk }) => {
   const handleMarkerMouseOver = (event) => {
     event.target.openPopup();
   };
@@ -88,8 +87,32 @@ const TraceLivestock = ({ livestock, deforestedAreas }) => {
           </Popup>
         </Marker>
       ))}
+
+      {/* Display livestock at risk */}
+      {livestockAtRisk.map((ls_at_risk, index) => (
+        <Marker
+          key={index}
+          position={[ls_at_risk.latitude, ls_at_risk.longitude]}
+          icon={customRedIcon}
+          riseOnHover={true}
+          keyboard={true}
+          eventHandlers={{
+            mouseover: handleMarkerMouseOver,
+          }}
+        >
+          <Popup>
+            <strong>{ls_at_risk.owner}</strong>
+            <br />
+            <strong>{ls_at_risk.contact}</strong>
+            <br />
+            Lat: {ls_at_risk.latitude.toFixed(4)}
+            <br />
+            Lon: {ls_at_risk.longitude.toFixed(4)}
+          </Popup>
+        </Marker>
+      ))}
     </MapContainer>
   );
-}
+};
 
 export default TraceLivestock;
