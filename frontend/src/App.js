@@ -12,6 +12,7 @@ function App() {
 
   // define state for all livestock
   const [livestock, setLivestock] = useState([]);
+  const [deforestedAreas, setDeforestedAreas] = useState([]);
 
   // fetch livestock data
   useEffect(() => {
@@ -23,9 +24,19 @@ function App() {
       throw res;
     })
     .then(data => setLivestock(data));
-  }, [])
+  }, []);
 
-  console.log(livestock)
+  // fetch deforested areas data
+  useEffect(() => {
+    fetch("http://127.0.0.1:5000/deforested_areas")
+    .then(res => {
+      if (res.ok) {
+        return res.json();
+      }
+      throw res;
+    })
+    .then(data => setDeforestedAreas(data));
+  }, []);
 
   return (
     <BrowserRouter>
@@ -35,7 +46,7 @@ function App() {
         <Routes>
           <Route exact path="/" element={<Home />} />
 
-          <Route exact path="/tracelivestock" element={<TraceLivestock livestock={livestock} />} />
+          <Route exact path="/tracelivestock" element={<TraceLivestock livestock={livestock} deforestedAreas={deforestedAreas} />} />
 
           <Route exact path="/campaigns" element={<Campaigns />} />
         </Routes>

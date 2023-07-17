@@ -13,6 +13,7 @@ from helpers import *
 
 import pandas as pd
 import numpy as np
+import json
 
 # create an instance of Flask
 app = Flask(__name__)
@@ -147,8 +148,13 @@ def get_livestock_in_deforested_areas():
     #### Find the livestock in the areas at risk ###
     livestock_in_deforested_areas = livestock_data[np.min(livestock_distances, axis=1) <= risk_buffer].copy()
 
-    # Convert the GeoDataFrame to JSON and return it
-    return jsonify(livestock_in_deforested_areas.to_json())
+    # Convert dataframe to JSON with formatted output
+    json_data = livestock_in_deforested_areas.to_json(orient='records', indent=4)
+    parsed_json = json.loads(json_data)
+    formatted_json = json.dumps(parsed_json, indent=None)
+
+    # Return JSON response
+    return formatted_json
 
 
 if __name__ == '__main__':
