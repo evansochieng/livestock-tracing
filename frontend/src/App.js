@@ -60,9 +60,23 @@ function App() {
         <Routes>
           <Route exact path="/" element={<Home />} />
 
-          <Route exact path="/tracelivestock" element={<TraceLivestock livestock={livestock} deforestedAreas={deforestedAreas} livestockAtRisk={livestockAtRisk} />} />
+          <Route
+            exact
+            path="/tracelivestock"
+            element={
+              <TraceLivestock
+                livestock={livestock}
+                deforestedAreas={deforestedAreas}
+                livestockAtRisk={livestockAtRisk}
+              />
+            }
+          />
 
-          <Route exact path="/campaigns" element={<Campaigns />} />
+          <Route
+            exact
+            path="/campaigns"
+            element={<Campaigns livestockAtRisk={livestockAtRisk} />}
+          />
         </Routes>
 
         <Footer />

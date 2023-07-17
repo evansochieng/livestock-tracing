@@ -1,7 +1,8 @@
 # import flask
-from flask import Flask, make_response, jsonify
+from flask import Flask, make_response, jsonify, session
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
+import os
 
 from flask_cors import CORS
 
@@ -31,12 +32,12 @@ migrate = Migrate(app, db)
 # initialize application for use within our database configuration
 db.init_app(app)
 
-# create a simple route for testing
+# Generate a secret key or use an existing one
+app.secret_key = os.urandom(24)
 
-@app.route('/')
-def index():
-    return '<h1>Welcome to the Livestock Traceability System!</h1>'
+### Create routes for serving data to the client-side ###
 
+# Serve all deforested areas
 @app.route('/deforested_areas')
 def deforested_areas():
     d_areas = []
@@ -57,6 +58,7 @@ def deforested_areas():
     
     return response
 
+# Serve all livestock in the database
 @app.route('/livestock')
 def livestocks():
     livestocks = []
@@ -79,6 +81,11 @@ def livestocks():
     
     return response
 
+# grab livestock at risk
+def grab_at_risk_livestock(data):
+    return data
+
+# Serve animals at risk
 @app.route('/livestock_at_risk')
 def get_livestock_in_deforested_areas():
 
@@ -148,6 +155,8 @@ def get_livestock_in_deforested_areas():
     #### Find the livestock in the areas at risk ###
     livestock_in_deforested_areas = livestock_data[np.min(livestock_distances, axis=1) <= risk_buffer].copy()
 
+    # # Collect the animals at risk dataframe and use it to subset safe animals
+
     # Convert dataframe to JSON with formatted output
     json_data = livestock_in_deforested_areas.to_json(orient='records', indent=4)
     parsed_json = json.loads(json_data)
@@ -156,6 +165,23 @@ def get_livestock_in_deforested_areas():
     # Return JSON response
     return formatted_json
 
+# Serve safe animals
+@app.route("/safe_livestock")
+def get_safe_livestock():
+    
+    ### Create a connection to the databases and extract all the data as a DataFrame ###
+    # Livestock and Deforested Area data
+    tracing_conn = sqlite3.connect('./instance/livestock_tracing.db')
+
+    # livestock data
+    livestock_query = "SELECT * FROM livestocks;"
+    livestock_data = pd.read_sql(livestock_query, tracing_conn)
+
+    tracing_conn.close()
+
+    ###
+
+    return "Kimeumana"
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
