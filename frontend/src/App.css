@@ -36,3 +36,13 @@
     transform: rotate(360deg);
   }
 }
+
+.buffer-form {
+  position: absolute;
+  width: 150px;
+  height: 150px;
+  right: 20px;
+  z-index: +20;
+  margin-top: 30px;
+  background-color: #1c94e3;
+}

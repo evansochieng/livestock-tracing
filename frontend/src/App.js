@@ -68,6 +68,7 @@ function App() {
                 livestock={livestock}
                 deforestedAreas={deforestedAreas}
                 livestockAtRisk={livestockAtRisk}
+                setLivestockAtRisk={setLivestockAtRisk}
               />
             }
           />
