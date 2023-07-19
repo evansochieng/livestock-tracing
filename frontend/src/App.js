@@ -11,9 +11,9 @@ import Campaigns from './components/Campaigns';
 function App() {
   // define state for all livestock, deforested areas, and livestock at risk
   const [livestock, setLivestock] = useState([]);
-  //const [safeLivestock, setSafeLivestock] = useState([]);
   const [deforestedAreas, setDeforestedAreas] = useState([]);
   const [livestockAtRisk, setLivestockAtRisk] = useState([]);
+  const [safeLivestock, setSafeLivestock] = useState([]);
 
   // fetch all livestock data
   useEffect(() => {
@@ -26,18 +26,6 @@ function App() {
       })
       .then((data) => setLivestock(data));
   }, []);
-
-  // // fetch safe livestock data
-  // useEffect(() => {
-  //   fetch("http://127.0.0.1:5000/safe_livestock")
-  //     .then((res) => {
-  //       if (res.ok) {
-  //         return res.json();
-  //       }
-  //       throw res;
-  //     })
-  //     .then((data) => setSafeLivestock(data));
-  // }, []);
 
   // fetch deforested areas data
   useEffect(() => {
@@ -64,21 +52,19 @@ function App() {
   }, []);
 
   // Grab safe livestock
-  const safeLivestock = livestock.filter(
-    (originalLivestock) =>
-      !livestockAtRisk.some((atRisk) => atRisk.id === originalLivestock.id)
-  );
 
-  /////////////////
-  console.log("Livestock at risk")
-  console.log(livestockAtRisk)
+  const filterSafeLivestock = () => {
+    const updateSafeLivestock = livestock.filter(
+      (originalLivestock) =>
+        !livestockAtRisk.some((atRisk) => atRisk.id === originalLivestock.id)
+    );
+    setSafeLivestock(updateSafeLivestock);
+  }
 
-  console.log("Safe Livestock")
-  console.log(safeLivestock)
-
-  console.log("All livestock")
-  console.log(livestock)
-  ///////////////////
+  // Filter safe livestock dynamically as livestock at risk changes
+  useEffect( () => {
+    filterSafeLivestock();
+  }, [livestockAtRisk]);
 
   return (
     <BrowserRouter>

@@ -4,6 +4,7 @@ import "../App.css"
 
 const Buffer = ({ setLivestockAtRisk }) => {
 
+  // use formik
     const {handleSubmit, values, handleChange} = useFormik({
         initialValues: {buffer: 0},
         onSubmit: (values) => {
