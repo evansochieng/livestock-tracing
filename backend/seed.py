@@ -40,21 +40,24 @@ with app.app_context(): # ensures that application fail quickly if it is not con
     deforested1 = DeforestationArea(
         latitude=0.28833218,
         longitude=34.853663252,
-        area=630
+        area=630,
+        name="Kakamega Forest"
     )
     deforestation_areas.append(deforested1)
 
     deforested2 = DeforestationArea(
         latitude=-1.23749905,
         longitude=36.82083005,
-        area=2630
+        area=2630,
+        name="Karura Forest"
     )
     deforestation_areas.append(deforested2)
 
     deforested3 = DeforestationArea(
         latitude=-3.33333333,
         longitude=39.83333333,
-        area=5803
+        area=5803,
+        name="Arabuko Sokoke"
     )
     deforestation_areas.append(deforested3)
 

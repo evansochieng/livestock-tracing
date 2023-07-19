@@ -30,6 +30,7 @@ class DeforestationArea(db.Model):
     latitude = db.Column(db.Float)
     longitude = db.Column(db.Float)
     area = db.Column(db.Integer)
+    name = db.Column(db.String, unique=True)
 
     def __repr__(self):
         return f'<Deforested Area {self.area} square-km>'
