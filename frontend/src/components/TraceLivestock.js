@@ -91,7 +91,7 @@ const TraceLivestock = ({ safeLivestock, deforestedAreas, livestockAtRisk, setLi
               <br />
               Lon: {defArea.longitude.toFixed(4)}
               <br />
-              <strong>{defArea.area}</strong>
+              Area: {defArea.area}
             </Popup>
           </CircleMarker>
         ))}

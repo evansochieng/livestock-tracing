@@ -93,8 +93,18 @@ def get_at_risk_livestock():
     # create a function for find livestock at risk 
     def find_livestock_at_deforested_areas(buffer=100):
         print(buffer)
-        g.safe_animals = livestock_data[np.min(livestock_distances, axis=1) > buffer].copy()
-        return livestock_data[np.min(livestock_distances, axis=1) <= buffer].copy(), livestock_data[np.min(livestock_distances, axis=1) > buffer].copy()
+
+        # find the livestock at risk
+        livestock_in_deforested_areas = livestock_data[np.min(livestock_distances, axis=1) <= buffer].copy()
+
+        # nearest forest indices
+        nearest_indices = np.argmin(livestock_distances, axis=1)
+        indices = nearest_indices[np.min(livestock_distances, axis=1) <= buffer].tolist()
+        livestock_in_deforested_areas.loc[:, "nearest_DA"] = deforested_data.loc[indices, 'name'].tolist()
+
+        # g.safe_animals = livestock_data[np.min(livestock_distances, axis=1) > buffer].copy()
+        # return livestock_data[np.min(livestock_distances, axis=1) <= buffer].copy(), livestock_data[np.min(livestock_distances, axis=1) > buffer].copy()
+        return livestock_in_deforested_areas
     
     g.find_livestock_at_deforested_areas = find_livestock_at_deforested_areas
 
@@ -160,7 +170,8 @@ def get_livestock_in_deforested_areas():
         print(request.get_json())
         buffer = int(request.json["buffer"])
         # Convert dataframe to JSON with formatted output
-        g.livestock_at_risk, g.safe = g.find_livestock_at_deforested_areas(buffer)
+        # g.livestock_at_risk, g.safe = g.find_livestock_at_deforested_areas(buffer)
+        g.livestock_at_risk = g.find_livestock_at_deforested_areas(buffer)
         json_data = g.livestock_at_risk.to_json(orient='records', indent=4)
         # json_data = g.find_livestock_at_deforested_areas(buffer).to_json(orient='records', indent=4)
         parsed_json = json.loads(json_data)
@@ -171,10 +182,12 @@ def get_livestock_in_deforested_areas():
 
     # Convert dataframe to JSON with formatted output
     # json_data = g.livestock_at_risk.to_json(orient='records', indent=4)
-    g.livestock_at_risk, g.safe = g.find_livestock_at_deforested_areas()
-    print(g.livestock_at_risk)
-    print("/n")
-    print(g.safe)
+
+    g.livestock_at_risk = g.find_livestock_at_deforested_areas()
+    # g.livestock_at_risk, g.safe = g.find_livestock_at_deforested_areas()
+    # print(g.livestock_at_risk)
+    # print("/n")
+    # print(g.safe)
     json_data = g.livestock_at_risk.to_json(orient='records', indent=4)
     parsed_json = json.loads(json_data)
     formatted_json = json.dumps(parsed_json, indent=None)
