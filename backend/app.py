@@ -90,18 +90,20 @@ def get_at_risk_livestock():
     # # should we consider area of risk
     # risk_buffer = 100
 
-    # create a function for 
-    def find_livestock_at_deforested_areas(buffer):
+    # create a function for find livestock at risk 
+    def find_livestock_at_deforested_areas(buffer=100):
         print(buffer)
-        return livestock_data[np.min(livestock_distances, axis=1) <= buffer].copy()
+        g.safe_animals = livestock_data[np.min(livestock_distances, axis=1) > buffer].copy()
+        return livestock_data[np.min(livestock_distances, axis=1) <= buffer].copy(), livestock_data[np.min(livestock_distances, axis=1) > buffer].copy()
     
     g.find_livestock_at_deforested_areas = find_livestock_at_deforested_areas
 
     # #### Find the livestock in the areas at risk ###
     # livestock_in_deforested_areas = livestock_data[np.min(livestock_distances, axis=1) <= risk_buffer].copy()
 
+    ####################################################################3
     # # Collect the animals at risk dataframe and use it to subset safe animals
-    g.livestock_at_risk = find_livestock_at_deforested_areas(100)
+    # g.livestock_at_risk = find_livestock_at_deforested_areas(100)
 
 ### Create routes for serving data to the client-side ###
 
@@ -157,7 +159,9 @@ def get_livestock_in_deforested_areas():
         print(request.get_json())
         buffer = int(request.json["buffer"])
         # Convert dataframe to JSON with formatted output
-        json_data = g.find_livestock_at_deforested_areas(buffer).to_json(orient='records', indent=4)
+        g.livestock_at_risk, g.safe = g.find_livestock_at_deforested_areas(buffer)
+        json_data = g.livestock_at_risk.to_json(orient='records', indent=4)
+        # json_data = g.find_livestock_at_deforested_areas(buffer).to_json(orient='records', indent=4)
         parsed_json = json.loads(json_data)
         formatted_json = json.dumps(parsed_json, indent=None)
 
@@ -165,6 +169,11 @@ def get_livestock_in_deforested_areas():
         return formatted_json
 
     # Convert dataframe to JSON with formatted output
+    # json_data = g.livestock_at_risk.to_json(orient='records', indent=4)
+    g.livestock_at_risk, g.safe = g.find_livestock_at_deforested_areas()
+    print(g.livestock_at_risk)
+    print("/n")
+    print(g.safe)
     json_data = g.livestock_at_risk.to_json(orient='records', indent=4)
     parsed_json = json.loads(json_data)
     formatted_json = json.dumps(parsed_json, indent=None)
@@ -188,22 +197,25 @@ def get_safe_livestock():
 
     ###
 
-    # Get the safe livestock
-    # Merge the two dataframes using 'outer' join and indicator=True
-    merged_df = livestock_data.merge(g.livestock_at_risk, how='outer', indicator=True)
+    # # Get the safe livestock
+    # # Merge the two dataframes using 'outer' join and indicator=True
+    # merged_df = livestock_data.merge(g.livestock_at_risk, how='outer', indicator=True)
 
-    # Filter out the rows where the '_merge' column is 'left_only'
-    safe_animals = merged_df[merged_df['_merge'] == 'left_only']
+    # # Filter out the rows where the '_merge' column is 'left_only'
+    # safe_animals = merged_df[merged_df['_merge'] == 'left_only']
 
-    # Drop the '_merge' column as it's no longer needed
-    safe_animals = safe_animals.drop(columns=['_merge'])
+    # # Drop the '_merge' column as it's no longer needed
+    # safe_animals = safe_animals.drop(columns=['_merge'])
 
-    json_data = safe_animals.to_json(orient='records', indent=4)
-    parsed_json = json.loads(json_data)
-    formatted_json = json.dumps(parsed_json, indent=None)
+    # json_data = g.safe_animals.to_json(orient='records', indent=4)
+    # parsed_json = json.loads(json_data)
+    # formatted_json = json.dumps(parsed_json, indent=None)
 
-    # Return JSON response
-    return formatted_json
+    # # Return JSON response
+    # return formatted_json
+    print("/n")
+    print(g.safe)
+    return("Hi")
     
 @app.route("/")
 def index():

@@ -1,5 +1,5 @@
 import React from 'react';
-import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
+import { CircleMarker, MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import L from "leaflet";
 
 import redicon from "../images/redicon.png";
@@ -37,11 +37,11 @@ const TraceLivestock = ({ safeLivestock, deforestedAreas, livestockAtRisk, setLi
 
   return (
     <>
-      <Buffer setLivestockAtRisk={setLivestockAtRisk}/>
+      <Buffer setLivestockAtRisk={setLivestockAtRisk} />
       <MapContainer
         center={[-0.023559, 37.906193]}
         zoom={7}
-        style={{ height: "541px", width: "100%", zIndex: '-20' }}
+        style={{ height: "541px", width: "100%", zIndex: "-20" }}
       >
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
 
@@ -71,10 +71,13 @@ const TraceLivestock = ({ safeLivestock, deforestedAreas, livestockAtRisk, setLi
 
         {/* Display deforested areas */}
         {deforestedAreas.map((defArea, index) => (
-          <Marker
+          <CircleMarker
             key={index}
-            position={[defArea.latitude, defArea.longitude]}
-            icon={customGreyIcon}
+            center={[defArea.latitude, defArea.longitude]}
+            radius={Math.sqrt(defArea.area/10)}
+            // icon={customGreyIcon}
+            fillOpacity={0.5}
+            stroke={false}
             riseOnHover={true}
             keyboard={true}
             eventHandlers={{
@@ -88,7 +91,7 @@ const TraceLivestock = ({ safeLivestock, deforestedAreas, livestockAtRisk, setLi
               <br />
               <strong>{defArea.area}</strong>
             </Popup>
-          </Marker>
+          </CircleMarker>
         ))}
 
         {/* Display livestock at risk */}

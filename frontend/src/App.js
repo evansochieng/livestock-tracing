@@ -18,7 +18,7 @@ function App() {
 
   // fetch livestock data
   useEffect(() => {
-    fetch("http://127.0.0.1:5000/safe_livestock")
+    fetch("http://127.0.0.1:5000/livestock")
     .then(res => {
       if (res.ok) {
         return res.json();
