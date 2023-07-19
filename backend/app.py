@@ -1,7 +1,7 @@
 # import flask
 import sqlite3
 import json
-from flask import Flask, make_response, jsonify, g, request
+from flask import Flask, make_response, jsonify, g, request, session
 #from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 import os
@@ -90,9 +90,8 @@ def get_at_risk_livestock():
     # # should we consider area of risk
     # risk_buffer = 100
 
-    # create a function for find livestock at risk 
-    def find_livestock_at_deforested_areas(buffer=100):
-        print(buffer)
+    # create a function for find livestock at risk
+    def find_livestock_at_deforested_areas(buffer = 100):
 
         # find the livestock at risk
         livestock_in_deforested_areas = livestock_data[np.min(livestock_distances, axis=1) <= buffer].copy()
@@ -102,7 +101,7 @@ def get_at_risk_livestock():
         indices = nearest_indices[np.min(livestock_distances, axis=1) <= buffer].tolist()
         livestock_in_deforested_areas.loc[:, "nearest_DA"] = deforested_data.loc[indices, 'name'].tolist()
 
-        # g.safe_animals = livestock_data[np.min(livestock_distances, axis=1) > buffer].copy()
+        # safe_animals = livestock_data[np.min(livestock_distances, axis=1) > buffer].copy()
         # return livestock_data[np.min(livestock_distances, axis=1) <= buffer].copy(), livestock_data[np.min(livestock_distances, axis=1) > buffer].copy()
         return livestock_in_deforested_areas
     
@@ -125,6 +124,7 @@ def deforested_areas():
     # get all deforested areas from database
     for d_area in DeforestationArea.query.all():
         d_area_dict = {
+            "id": d_area.id,
             "latitude": d_area.latitude,
             "longitude": d_area.longitude,
             "area": d_area.area,
@@ -147,6 +147,7 @@ def livestocks():
     # get all the livestock in the database
     for livestock in Livestock.query.all():
         livestock_dict = {
+            "id": livestock.id,
             "latitude": livestock.latitude,
             "longitude": livestock.longitude,
             "owner": livestock.owner,
@@ -169,6 +170,7 @@ def get_livestock_in_deforested_areas():
     if request.method == 'POST':
         print(request.get_json())
         buffer = int(request.json["buffer"])
+
         # Convert dataframe to JSON with formatted output
         # g.livestock_at_risk, g.safe = g.find_livestock_at_deforested_areas(buffer)
         g.livestock_at_risk = g.find_livestock_at_deforested_areas(buffer)
@@ -184,10 +186,7 @@ def get_livestock_in_deforested_areas():
     # json_data = g.livestock_at_risk.to_json(orient='records', indent=4)
 
     g.livestock_at_risk = g.find_livestock_at_deforested_areas()
-    # g.livestock_at_risk, g.safe = g.find_livestock_at_deforested_areas()
-    # print(g.livestock_at_risk)
-    # print("/n")
-    # print(g.safe)
+    
     json_data = g.livestock_at_risk.to_json(orient='records', indent=4)
     parsed_json = json.loads(json_data)
     formatted_json = json.dumps(parsed_json, indent=None)

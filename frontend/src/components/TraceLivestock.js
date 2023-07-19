@@ -83,6 +83,7 @@ const TraceLivestock = ({ safeLivestock, deforestedAreas, livestockAtRisk, setLi
             eventHandlers={{
               mouseover: handleMarkerMouseOver,
             }}
+            color="#515549"
           >
             <Popup>
               <strong>{defArea.name}</strong>
