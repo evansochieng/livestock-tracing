@@ -21,13 +21,27 @@ const Buffer = ({ setLivestockAtRisk }) => {
     });
 
   return (
-    <form className='buffer-form' onSubmit={handleSubmit}>
-        <h3>Change Risk Buffer</h3>
-        <label htmlFor="buffer">Buffer</label>: {values.buffer}
-        <input id='buffer' type="range" min={0} max={5000} value={values.buffer} onChange={handleChange}/>
+    <div
+      className="buffer-div"
+      style={{ position: "absolute", marginTop: "30px", right: "20px" }}
+    >
+      <h3>
+        <strong>Change Risk Buffer</strong>
+      </h3>
+      <form className="buffer-form" onSubmit={handleSubmit}>
+        <label htmlFor="buffer">Buffer: {values.buffer}</label>
+        <input
+          id="buffer"
+          type="range"
+          min={0}
+          max={5000}
+          value={values.buffer}
+          onChange={handleChange}
+        />
         <button>Change</button>
-    </form>
-  )
+      </form>
+    </div>
+  );
 }
 
 export default Buffer

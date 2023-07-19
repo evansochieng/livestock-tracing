@@ -38,11 +38,30 @@
 }
 
 .buffer-form {
-  position: absolute;
+  /* position: absolute; */
   width: 150px;
-  height: 150px;
-  right: 20px;
-  z-index: +20;
-  margin-top: 30px;
-  background-color: #1c94e3;
+  height: 100px;
+  /* right: 20px; */
+  /* z-index: +20; */
+  margin-top: 5px;
+  /* background-color: #1c94e3; */
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.buffer-form button {
+  border: 2px solid #333; 
+  border-radius: 4px; 
+  width: 80px;
+  height: 30px;
+  margin-top: 20px;
+  margin-left: 25px;
+  background-color: #76b6c4; 
+  color: #333; 
+  font-size: 16px; 
+  cursor: pointer; 
+  justify-content: center;
 }

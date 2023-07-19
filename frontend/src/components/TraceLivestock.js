@@ -41,7 +41,7 @@ const TraceLivestock = ({ safeLivestock, deforestedAreas, livestockAtRisk, setLi
       <MapContainer
         center={[-0.023559, 37.906193]}
         zoom={7}
-        style={{ height: "541px", width: "100%", zIndex: "-20" }}
+        style={{ height: "541px", width: "85%" }}
       >
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
 
