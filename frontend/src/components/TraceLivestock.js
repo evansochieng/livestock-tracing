@@ -74,7 +74,7 @@ const TraceLivestock = ({ safeLivestock, deforestedAreas, livestockAtRisk, setLi
           <CircleMarker
             key={index}
             center={[defArea.latitude, defArea.longitude]}
-            radius={Math.sqrt(defArea.area/10)}
+            radius={Math.sqrt(defArea.area / 10)}
             // icon={customGreyIcon}
             fillOpacity={0.5}
             stroke={false}
@@ -85,6 +85,8 @@ const TraceLivestock = ({ safeLivestock, deforestedAreas, livestockAtRisk, setLi
             }}
           >
             <Popup>
+              <strong>{defArea.name}</strong>
+              <br />
               Lat: {defArea.latitude.toFixed(4)}
               <br />
               Lon: {defArea.longitude.toFixed(4)}

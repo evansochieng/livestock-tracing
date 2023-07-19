@@ -117,7 +117,8 @@ def deforested_areas():
         d_area_dict = {
             "latitude": d_area.latitude,
             "longitude": d_area.longitude,
-            "area": d_area.area
+            "area": d_area.area,
+            "name": d_area.name
         }
         d_areas.append(d_area_dict)
 
