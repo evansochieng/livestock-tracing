@@ -65,3 +65,18 @@
   cursor: pointer; 
   justify-content: center;
 }
+
+#stats-cards {
+  border: 1px solid #dadada;
+  box-shadow: 4px 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+#stats-cards:hover {
+  box-shadow: 8px 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+#download-btns {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
