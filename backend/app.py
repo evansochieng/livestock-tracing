@@ -1,6 +1,8 @@
 # import flask
+import sqlite3
+import json
 from flask import Flask, make_response, jsonify, g, request
-from flask_sqlalchemy import SQLAlchemy
+#from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 import os
 
@@ -8,13 +10,10 @@ from flask_cors import CORS
 
 from models import db, Livestock, DeforestationArea
 
-import sqlite3
-
-from helpers import *
+from helpers import calculate_distance
 
 import pandas as pd
 import numpy as np
-import json
 
 # create an instance of Flask
 app = Flask(__name__)
@@ -130,7 +129,7 @@ def deforested_areas():
 # Serve all livestock in the database
 @app.route('/livestock')
 def livestocks():
-    livestocks = []
+    available_livestocks = []
 
     # get all the livestock in the database
     for livestock in Livestock.query.all():
@@ -140,11 +139,11 @@ def livestocks():
             "owner": livestock.owner,
             "contact": livestock.contact
         }
-        livestocks.append(livestock_dict)
+        available_livestocks.append(livestock_dict)
 
     # return a json of livestock records
     response = make_response(
-        jsonify(livestocks),
+        jsonify(available_livestocks),
         200
     )
     
@@ -189,9 +188,22 @@ def get_safe_livestock():
 
     ###
 
-    print(g.livestock_at_risk)
+    # Get the safe livestock
+    # Merge the two dataframes using 'outer' join and indicator=True
+    merged_df = livestock_data.merge(g.livestock_at_risk, how='outer', indicator=True)
 
-    return "Kimeumana"
+    # Filter out the rows where the '_merge' column is 'left_only'
+    safe_animals = merged_df[merged_df['_merge'] == 'left_only']
+
+    # Drop the '_merge' column as it's no longer needed
+    safe_animals = safe_animals.drop(columns=['_merge'])
+
+    json_data = safe_animals.to_json(orient='records', indent=4)
+    parsed_json = json.loads(json_data)
+    formatted_json = json.dumps(parsed_json, indent=None)
+
+    # Return JSON response
+    return formatted_json
     
 @app.route("/")
 def index():

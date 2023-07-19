@@ -11,21 +11,21 @@ import Campaigns from './components/Campaigns';
 function App() {
 
   // define state for all livestock, deforested areas, and livestock at risk
-  const [livestock, setLivestock] = useState([]);
+  const [safeLivestock, setSafeLivestock] = useState([]);
   const [deforestedAreas, setDeforestedAreas] = useState([]);
   const [livestockAtRisk, setLivestockAtRisk] = useState([]);
 
 
   // fetch livestock data
   useEffect(() => {
-    fetch("http://127.0.0.1:5000/livestock")
+    fetch("http://127.0.0.1:5000/safe_livestock")
     .then(res => {
       if (res.ok) {
         return res.json();
       }
       throw res;
     })
-    .then(data => setLivestock(data));
+    .then(data => setSafeLivestock(data));
   }, []);
 
   // fetch deforested areas data
@@ -65,7 +65,7 @@ function App() {
             path="/tracelivestock"
             element={
               <TraceLivestock
-                livestock={livestock}
+                safeLivestock={safeLivestock}
                 deforestedAreas={deforestedAreas}
                 livestockAtRisk={livestockAtRisk}
                 setLivestockAtRisk={setLivestockAtRisk}

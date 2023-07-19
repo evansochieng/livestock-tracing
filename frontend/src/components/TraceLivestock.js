@@ -8,7 +8,7 @@ import greyicon from "../images/greyicon.png";
 
 import Buffer from './Buffer';
 
-const TraceLivestock = ({ livestock, deforestedAreas, livestockAtRisk, setLivestockAtRisk }) => {
+const TraceLivestock = ({ safeLivestock, deforestedAreas, livestockAtRisk, setLivestockAtRisk }) => {
   const handleMarkerMouseOver = (event) => {
     event.target.openPopup();
   };
@@ -46,7 +46,7 @@ const TraceLivestock = ({ livestock, deforestedAreas, livestockAtRisk, setLivest
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
 
         {/* Display all livestock locations */}
-        {livestock.map((animal, index) => (
+        {safeLivestock.map((animal, index) => (
           <Marker
             key={index}
             position={[animal.latitude, animal.longitude]}
