@@ -8,15 +8,37 @@ import { Chart, registerables } from "chart.js";
 Chart.register(...registerables);
 
 const Campaigns = ({ livestock, livestockAtRisk, safeLivestock, deforestedAreas }) => {
-  console.log(safeLivestock)
+  //console.log(deforestedAreas)
 
   // create a hook for downloading data
-  const csvLink = useRef();
+  const atRiskCSVLink = useRef();
+  const allCSVLink = useRef();
+  const daCSVLink = useRef();
+  const safeCSVLink = useRef();
 
-  // create a function to handle downloads
+  // create a function to handle download of livestock at risk
   const getLivestockAtRiskData = () => {
-    csvLink.current.link.click();
-  }
+    console.log(atRiskCSVLink.current.link);
+    atRiskCSVLink.current.link.click();
+  };
+
+  // create a function to handle download of all livestock
+  const getAllLivestockData = () => {
+    console.log(allCSVLink.current.link);
+    allCSVLink.current.link.click();
+  };
+
+  // create a function to handle download deforested areas
+  const getDeforestedAreasData = () => {
+    console.log(daCSVLink.current.link);
+    daCSVLink.current.link.click();
+  };
+
+  // create a function to handle download safe livestock
+  const getSafeLivestockData = () => {
+    console.log(safeCSVLink.current.link);
+    safeCSVLink.current.link.click();
+  };
 
   // Group by operation on 'nearest deforested area'
   const groupedByNearestDA = livestockAtRisk.reduce((acc, obj) => {
@@ -26,7 +48,10 @@ const Campaigns = ({ livestock, livestockAtRisk, safeLivestock, deforestedAreas 
   }, {});
 
   // Get the area with more casualties
-  const most_affected_area = Object.keys(groupedByNearestDA).reduce((a, b) => (groupedByNearestDA[a] > groupedByNearestDA[b] ? a : b), 'None');
+  const most_affected_area = Object.keys(groupedByNearestDA).reduce(
+    (a, b) => (groupedByNearestDA[a] > groupedByNearestDA[b] ? a : b),
+    "None"
+  );
   const most_affected_victims = groupedByNearestDA[most_affected_area];
 
   // prepare the data to display
@@ -46,8 +71,8 @@ const Campaigns = ({ livestock, livestockAtRisk, safeLivestock, deforestedAreas 
   // Get the number of affected vs unaffected livestock
   const atRiskComparison = {
     "At Risk": livestockAtRisk.length,
-    "Not at Risk": safeLivestock.length
-  }
+    "Not at Risk": safeLivestock.length,
+  };
 
   // prepare the data to display in graph
   const comparisonChartData = {
@@ -214,13 +239,13 @@ const Campaigns = ({ livestock, livestockAtRisk, safeLivestock, deforestedAreas 
 
       <div
         className="download-buttons"
-        id='download-btns'
+        id="download-btns"
         style={{
           display: "flex",
           flexDirection: "row",
           marginRight: "10px",
           marginLeft: "10px",
-          marginTop: "20px"
+          marginTop: "20px",
         }}
       >
         {/* Download Data of Affected Livestock */}
@@ -242,7 +267,7 @@ const Campaigns = ({ livestock, livestockAtRisk, safeLivestock, deforestedAreas 
             data={livestockAtRisk}
             filename="livestock_at_risk.csv"
             className="hidden"
-            ref={csvLink}
+            ref={atRiskCSVLink}
             target="_blank"
           />
         </div>
@@ -251,7 +276,7 @@ const Campaigns = ({ livestock, livestockAtRisk, safeLivestock, deforestedAreas 
         <div>
           <button
             className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center"
-            onClick={getLivestockAtRiskData}
+            onClick={getAllLivestockData}
           >
             <svg
               className="fill-current w-4 h-4 mr-2"
@@ -266,7 +291,7 @@ const Campaigns = ({ livestock, livestockAtRisk, safeLivestock, deforestedAreas 
             data={livestock}
             filename="all_livestock.csv"
             className="hidden"
-            ref={csvLink}
+            ref={allCSVLink}
             target="_blank"
           />
         </div>
@@ -275,7 +300,7 @@ const Campaigns = ({ livestock, livestockAtRisk, safeLivestock, deforestedAreas 
         <div>
           <button
             className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center"
-            onClick={getLivestockAtRiskData}
+            onClick={getDeforestedAreasData}
           >
             <svg
               className="fill-current w-4 h-4 mr-2"
@@ -290,7 +315,7 @@ const Campaigns = ({ livestock, livestockAtRisk, safeLivestock, deforestedAreas 
             data={deforestedAreas}
             filename="deforested_areas.csv"
             className="hidden"
-            ref={csvLink}
+            ref={daCSVLink}
             target="_blank"
           />
         </div>
@@ -299,7 +324,7 @@ const Campaigns = ({ livestock, livestockAtRisk, safeLivestock, deforestedAreas 
         <div>
           <button
             className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center"
-            onClick={getLivestockAtRiskData}
+            onClick={getSafeLivestockData}
           >
             <svg
               className="fill-current w-4 h-4 mr-2"
@@ -314,7 +339,7 @@ const Campaigns = ({ livestock, livestockAtRisk, safeLivestock, deforestedAreas 
             data={safeLivestock}
             filename="safe_livestock.csv"
             className="hidden"
-            ref={csvLink}
+            ref={safeCSVLink}
             target="_blank"
           />
         </div>

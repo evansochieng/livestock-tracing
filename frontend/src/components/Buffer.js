@@ -1,8 +1,34 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {useFormik} from 'formik';
 import "../App.css"
 
 const Buffer = ({ setLivestockAtRisk }) => {
+
+  // // initialize state for buffer
+  // const [values, setValues] = useState({ buffer: 0 });
+
+  // // create handle change function
+  // const handleChange = (event) => {
+  //   setValues(event.target.value);
+  // };
+
+  // // define handle submit function
+  // const handleSubmit = (event) => {
+  //   event.preventDefault();
+
+  //   fetch("http://127.0.0.1:5000/livestock_at_risk", {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify(values),
+  //   })
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       console.log(data)
+  //       setLivestockAtRisk(data);
+  //     });
+  // }
 
   // use formik
     const {handleSubmit, values, handleChange} = useFormik({
