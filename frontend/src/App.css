@@ -80,3 +80,33 @@
   justify-content: space-between;
   width: 100%;
 }
+
+
+/* styles.css (or any other CSS file you are using) */
+
+.legend {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background-color: white;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  z-index: 1000;
+}
+
+.legend h3 {
+  margin-top: 0;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.legend-item img {
+  width: 20px;
+  height: 20px;
+  margin-right: 5px;
+}

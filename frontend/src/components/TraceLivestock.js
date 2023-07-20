@@ -7,6 +7,7 @@ import greenicon from "../images/greenicon.png";
 import greyicon from "../images/greyicon.png";
 
 import Buffer from './Buffer';
+import Legend from './Legend';
 
 const TraceLivestock = ({ safeLivestock, deforestedAreas, livestockAtRisk, setLivestockAtRisk }) => {
   const handleMarkerMouseOver = (event) => {
@@ -34,6 +35,22 @@ const TraceLivestock = ({ safeLivestock, deforestedAreas, livestockAtRisk, setLi
     iconSize: [32, 32], // Adjust the size as needed
     iconAnchor: [16, 32], // Adjust the anchor point as needed
   });
+
+  const groups = [
+    {
+      name: "Not at Risk",
+      iconUrl: greenicon,
+    },
+    {
+      name: "At Risk",
+      iconUrl: redicon,
+    },
+    {
+      name: "Area of Risk",
+      radius: 10, // Radius of the CircleMarker
+      fillColor: "#515549", // Fill color of the CircleMarker
+    },
+  ];
 
   return (
     <>
@@ -120,6 +137,7 @@ const TraceLivestock = ({ safeLivestock, deforestedAreas, livestockAtRisk, setLi
             </Popup>
           </Marker>
         ))}
+        <Legend groups={groups} />
       </MapContainer>
     </>
   );

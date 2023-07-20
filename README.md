@@ -23,7 +23,7 @@ With this information, the government will be able to identify the livestock tha
 ### Project Guide
 - Navigate to the **Trace Livestock** page.    
 - Select the risk buffer. Risk buffer is the distance from the deforestation area which you consider area of risk. The default is 100.
-- The livestock at risk are displayed with a **red icon** while the safe livestock are displayed with a **green icon**.
+- The livestock at risk are displayed with a **red icon** while the safe livestock are displayed with a **green icon**. The deforested areas are displayed using a **greyish circle marker**.
 - On the **Campaigns** page there are summary statistics for the livestock at risk and those not at risk.
 - A user can be able to download CSV files which is not limited to the details of livestock at risk and those at risk only.
 
