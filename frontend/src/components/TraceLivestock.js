@@ -9,7 +9,7 @@ import greyicon from "../images/greyicon.png";
 import Buffer from './Buffer';
 import Legend from './Legend';
 
-const TraceLivestock = ({ safeLivestock, deforestedAreas, livestockAtRisk, setLivestockAtRisk }) => {
+const TraceLivestock = ({ safeLivestock, deforestedAreas, livestockAtRisk, setLivestockAtRisk, buffer, setBuffer }) => {
   const handleMarkerMouseOver = (event) => {
     event.target.openPopup();
   };
@@ -54,7 +54,7 @@ const TraceLivestock = ({ safeLivestock, deforestedAreas, livestockAtRisk, setLi
 
   return (
     <>
-      <Buffer setLivestockAtRisk={setLivestockAtRisk} />
+      <Buffer setLivestockAtRisk={setLivestockAtRisk} buffer={buffer} setBuffer={setBuffer} />
       <MapContainer
         center={[-0.023559, 37.906193]}
         zoom={7}

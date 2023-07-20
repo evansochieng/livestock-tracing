@@ -1,4 +1,5 @@
 import React from "react";
+import {Link} from 'react-router-dom';
 
 const NavBar = () => {
   
@@ -35,33 +36,42 @@ const NavBar = () => {
           >
             <li className="mb-4 lg:mb-0 lg:pr-2" data-te-nav-item-ref>
               {/* <!-- Home link --> */}
-              <a
+              {/* <a
                 className="text-neutral-500 transition duration-200 hover:text-neutral-700 hover:ease-in-out focus:text-neutral-700 disabled:text-black/30 motion-reduce:transition-none dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-zinc-400"
                 href="/"
                 data-te-nav-link-ref
               >
                 <strong>Home</strong>
-              </a>
+              </a> */}
+              <Link to="/">
+                <strong>Home</strong>
+              </Link>
             </li>
             {/* <!-- Map View link --> */}
             <li className="mb-4 lg:mb-0 lg:pr-2" data-te-nav-item-ref>
-              <a
+              {/* <a
                 className="text-neutral-500 transition duration-200 hover:text-neutral-700 hover:ease-in-out focus:text-neutral-700 disabled:text-black/30 motion-reduce:transition-none dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
                 href="/tracelivestock"
                 data-te-nav-link-ref
               >
                 <strong>Trace Livestock</strong>
-              </a>
+              </a> */}
+              <Link to="/tracelivestock">
+                <strong>Trace Livestock</strong>
+              </Link>
             </li>
             {/* <!-- Campaigns link --> */}
             <li className="mb-4 lg:mb-0 lg:pr-2" data-te-nav-item-ref>
-              <a
+              {/* <a
                 className="text-neutral-500 transition duration-200 hover:text-neutral-700 hover:ease-in-out focus:text-neutral-700 disabled:text-black/30 motion-reduce:transition-none dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
                 href="/campaigns"
                 data-te-nav-link-ref
               >
                 <strong>Campaigns</strong>
-              </a>
+              </a> */}
+              <Link to="/campaigns">
+                <strong>Campaigns</strong>
+              </Link>
             </li>
           </ul>
         </div>

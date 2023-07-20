@@ -15,6 +15,9 @@ function App() {
   const [livestockAtRisk, setLivestockAtRisk] = useState([]);
   const [safeLivestock, setSafeLivestock] = useState([]);
 
+  //define state for buffer
+  const [buffer, setBuffer] = useState({buffer: 0});
+
   // fetch all livestock data
   useEffect(() => {
     fetch("http://127.0.0.1:5000/livestock")
@@ -83,6 +86,8 @@ function App() {
                 deforestedAreas={deforestedAreas}
                 livestockAtRisk={livestockAtRisk}
                 setLivestockAtRisk={setLivestockAtRisk}
+                buffer={buffer}
+                setBuffer={setBuffer}
               />
             }
           />
@@ -90,7 +95,7 @@ function App() {
           <Route
             exact
             path="/campaigns"
-            element={<Campaigns livestock={livestock} livestockAtRisk={livestockAtRisk} safeLivestock={safeLivestock} deforestedAreas={deforestedAreas} />}
+            element={<Campaigns livestock={livestock} livestockAtRisk={livestockAtRisk} safeLivestock={safeLivestock} deforestedAreas={deforestedAreas} buffer={buffer} />}
           />
         </Routes>
 

@@ -7,8 +7,8 @@ import "../App.css";
 import { Chart, registerables } from "chart.js";
 Chart.register(...registerables);
 
-const Campaigns = ({ livestock, livestockAtRisk, safeLivestock, deforestedAreas }) => {
-  //console.log(deforestedAreas)
+const Campaigns = ({ livestock, livestockAtRisk, safeLivestock, deforestedAreas, buffer }) => {
+  console.log(buffer);
 
   // create a hook for downloading data
   const atRiskCSVLink = useRef();
