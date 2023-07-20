@@ -17,7 +17,7 @@ class Livestock(db.Model):
     latitude = db.Column(db.Float)
     longitude = db.Column(db.Float)
     owner = db.Column(db.String, unique=True)
-    contact = db.Column(db.Integer, unique=True)
+    contact = db.Column(db.BigInteger, unique=True)
 
     def __repr__(self):
         return f'<Livestock Owner {self.owner}>'
