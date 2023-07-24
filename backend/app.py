@@ -15,13 +15,12 @@ from helpers import calculate_distance
 import pandas as pd
 import numpy as np
 
-from dotenv import load_dotenv
-
 # create an instance of Flask
 app = Flask(__name__)
 
 # configure the database
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://rusty:evansochieng@localhost:5432/livestock_tracing_db'
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://rusty:evansochieng@localhost:5432/livestock_tracing_db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://rusty:evansochieng@database:5432/livestock_tracing_db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False # will avoid building too much unnecessary data in memory
 # Generate a secret key or use an existing one
 app.config["SECRET_KEY"] = "evansochieng"
@@ -35,8 +34,6 @@ migrate = Migrate(app, db)
 # initialize application for use within our database configuration
 db.init_app(app)
 
-load_dotenv
-
 # Define a global variable for livestock at risk
 @app.before_request
 def get_at_risk_livestock():
@@ -46,10 +43,12 @@ def get_at_risk_livestock():
     
     # Connect to the database
     conn = psycopg2.connect(
-        host="localhost",
-        database="livestock_tracing_db",
-        user=os.getenv['DB_USERNAME'],
-        password=os.getenv['DB_PASSWORD'])
+        #host="localhost",
+        host="database",
+        database=os.environ.get('DB_NAME', "livestock_tracing_db"),
+        user=os.environ.get('DB_USERNAME', 'rusty'),
+        password=os.environ.get('DB_PASSWORD', 'evansochieng')
+        )
 
     # Open a cursor to perform database operations
     cur = conn.cursor()
