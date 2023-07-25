@@ -6,6 +6,10 @@ services:
       context: .
     ports:
       - "5000:5000"
+    depends_on:
+      - database
+    command: >
+      bash -c "flask db upgrade && python seed.py && flask run --host 0.0.0.0 --port 5000"
 
   frontend:
     build:
