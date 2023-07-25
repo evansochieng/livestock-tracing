@@ -20,7 +20,22 @@ With this information, the government will be able to identify the livestock tha
 
 ---
 
-### Project Guide
+### Project Guide - Running the Containers
+1. Install Docker: Ensure Docker is installed in your system. You can find installation guides at: https://docs.docker.com/get-docker/
+2. Download or clone **docker-compose.yml** from the root directory of this repository.
+3. Modify **docker-compose.yml**: modify the file and provide your own database connection details (username and password).
+4. Pull Docker Images: The images are hosted in Docker Hub at: https://hub.docker.com/repositories/evanso.    
+   Open the terminal and run the following command to pull the Docker images (**livestock-tracing-backend** and **livestock-tracing-frontend**) from Docker Hub.
+5. Run Containers: Run the containers using the docker-compose up command: 
+**docker-compose up -d**
+6. Access the Application.    
+   The frontend will be accessed at: http://localhost:3000   
+   The backend will be accessed at: http://localhost:5000
+
+---
+
+### Navigating the application
+- The home page is the landing page.
 - Navigate to the **Trace Livestock** page.    
 - Select the risk buffer. Risk buffer is the distance from the deforestation area which you consider area of risk. The default is 100.
 - The livestock at risk are displayed with a **red icon** while the safe livestock are displayed with a **green icon**. The deforested areas are displayed using a **greyish circle marker**.
