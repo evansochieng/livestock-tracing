@@ -20,6 +20,7 @@ app = Flask(__name__)
 
 # configure the database
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://rusty:evansochieng@localhost:5432/livestock_tracing_db'
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://${DB_USERNAME}:${DB_PASSWORD}@database:5432/${DB_NAME}'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://rusty:evansochieng@database:5432/livestock_tracing_db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False # will avoid building too much unnecessary data in memory
 # Generate a secret key or use an existing one

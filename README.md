@@ -15,15 +15,15 @@ With this information, the government will be able to identify the livestock tha
 ### MVP
 1. Map display of livestock and deforestation areas. 
 2. Identification of livestock at risk based on selected risk buffer.
-3. Download functionality of details of livestock at risk.
-4. Summary statistics of analysis.
+3. Download functionality of details of livestock at risk for use in campaigns.
+4. Summary statistics of analysis for quick decision making on campaigns.
 
 ---
 
 ### Project Guide - Running the Containers
 1. Install Docker: Ensure Docker is installed in your system. You can find installation guides at: https://docs.docker.com/get-docker/
 2. Download or clone **docker-compose.yml** from the root directory of this repository.
-3. Modify **docker-compose.yml**: modify the file and provide your own database connection details (username and password).
+3. Modify **docker-compose.yml**: modify the file and provide your own database connection details (username and password). Additionally, adjust the values of the environment variables (in **.env** file) to match your own database connection details.
 4. Pull Docker Images: The images are hosted in Docker Hub at: https://hub.docker.com/repositories/evanso.    
    Open the terminal and run the following command to pull the Docker images (**livestock-tracing-backend** and **livestock-tracing-frontend**) from Docker Hub.
 5. Run Containers: Run the containers using the docker-compose up command: 
